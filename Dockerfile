@@ -16,4 +16,6 @@ RUN apt-get update && \
 
 EXPOSE 53
 
-CMD ["named", "-c", "/etc/bind/named.conf", "-g", "-u", "named"]
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+CMD ["/usr/bin/supervisord"]
