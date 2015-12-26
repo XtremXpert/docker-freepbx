@@ -12,6 +12,8 @@ RUN apt-get update && \
     	rng-tools \
     && \
     apt-get clean && \
+   	echo "HRNGDEVICE=/dev/urandom" >> /etc/default/rng-tools && \
+   	echo "#RNGDOPTIONS=\"--fill-watermark=80% --timeout=20\"" >> /etc/default/rng-tools && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 53
