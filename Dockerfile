@@ -1,8 +1,8 @@
-FROM alpine:latest
+FROM alpine:edge
 
-MAINTAINER resyst-it <florian.cauzardjarry@gmail.com>
+MAINTAINER XtremXpert <xtremxpert@xtremxpert.com>
 
-RUN apk --update add bind
+RUN apk --update add bind rng-tools
 
 EXPOSE 53
 
