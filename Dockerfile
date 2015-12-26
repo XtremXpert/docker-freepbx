@@ -8,7 +8,7 @@ RUN apt-get update && \
     apt-get install -y \
     	bind9 \
     	supervisor \
-    	dns-utils \
+    	dnsutils \
     	rng-tools \
     && \
     apt-get clean && \
