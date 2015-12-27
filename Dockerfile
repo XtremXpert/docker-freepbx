@@ -2,7 +2,7 @@ FROM alpine:edge
 
 MAINTAINER XtremXpert <xtremxpert@xtremxpert.com>
 
-RUN apk --update add bind rng-tools
+RUN apk --update add bind
 
 EXPOSE 53
 
