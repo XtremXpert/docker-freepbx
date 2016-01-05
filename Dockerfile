@@ -9,8 +9,8 @@ ENV LANG="fr_CA.UTF-8" \
 	TERM="xterm"
 
 RUN apk update && \
-	apk upgrade && \
-	apk add --update \
+	apk update && \
+	apk add \
 		bind
 
 EXPOSE 53 953
