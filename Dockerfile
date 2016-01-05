@@ -13,7 +13,19 @@ RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/
 RUN apk update && \
 	apk update && \
 	apk add \
-		bind
+		bind \
+		bind-tools \
+		ca-certificates \
+		mc \
+		nano \
+		openntpd \
+		rsync \
+		tar \
+		unzip \
+	&& \
+	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+	rm -fr /var/lib/apk/* && \
+	rm -rf /var/cache/apk/*
 
 EXPOSE 53 953
 
