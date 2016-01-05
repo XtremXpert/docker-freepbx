@@ -8,9 +8,12 @@ ENV LANG="fr_CA.UTF-8" \
 	TZ="America/Toronto" \
 	TERM="xterm"
 
-RUN apk --update add bind
+RUN apk update && \
+	apk upgrade && \
+	apk --update add \
+		bind
 
-EXPOSE 53
+EXPOSE 53 953
 
 ENTRYPOINT ["/init"]
 
