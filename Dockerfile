@@ -8,6 +8,8 @@ ENV LANG="fr_CA.UTF-8" \
 	TZ="America/Toronto" \
 	TERM="xterm"
 
+RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+
 RUN apk update && \
 	apk update && \
 	apk add \
