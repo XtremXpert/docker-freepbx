@@ -10,7 +10,7 @@ ENV LANG="fr_CA.UTF-8" \
 
 RUN apk update && \
 	apk upgrade && \
-	apk --update add \
+	apk add --update \
 		bind
 
 EXPOSE 53 953
