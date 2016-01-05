@@ -31,6 +31,6 @@ RUN apk update && \
 EXPOSE 53
 EXPOSE 953
 
-ENTRYPOINT ["/init"]
+#ENTRYPOINT ["/init"]
 
-CMD ["named", "-c", "/etc/bind/named.conf", "-g", "-u", "named"]
+#CMD ["named", "-c", "/etc/bind/named.conf", "-g", "-u", "named"]
