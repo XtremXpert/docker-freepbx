@@ -6,6 +6,6 @@ RUN apk --update add bind
 
 EXPOSE 53
 
-#ENTRYPOINT ["/init"]
+ENTRYPOINT ["/init"]
 
-#CMD ["named", "-c", "/etc/bind/named.conf", "-g", "-u", "named"]
+CMD ["named", "-c", "/etc/bind/named.conf", "-g", "-u", "named"]
