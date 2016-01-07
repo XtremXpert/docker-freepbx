@@ -35,4 +35,4 @@ EXPOSE 53 953
 
 ENTRYPOINT ["/init"]
 
-CMD ["named", "-c", "/etc/bind/named.conf", "-g", "-u", "named"]
+CMD ["named", "-c", "/etc/bind/named.conf", "-g", "-4", "-u", "named"]
