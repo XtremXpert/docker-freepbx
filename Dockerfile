@@ -25,6 +25,7 @@ RUN apk update && \
 		openntpd \
 		rsync \
 		tar \
+		tzdata \
 		unzip \
 	&& \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
