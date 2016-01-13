@@ -28,6 +28,9 @@ RUN apk update && \
 		tzdata \
 		unzip \
 	&& \
+	mkdir /etc/service.d/named && \
+	echo "#!/usr/bin/execlineb -P"  >> /etc/service.d/named/run && \
+	echo "named -c /etc/bind/named.conf -g -4 -u named"  >> /etc/service.d/named/run && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 	rm -fr /var/lib/apk/* && \
 	rm -rf /var/cache/apk/*
@@ -35,5 +38,3 @@ RUN apk update && \
 EXPOSE 53 953
 
 ENTRYPOINT ["/init"]
-
-CMD ["named", "-c", "/etc/bind/named.conf", "-g", "-4", "-u", "named"]
