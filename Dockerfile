@@ -32,9 +32,9 @@ RUN apk update && \
 	rm -fr /var/lib/apk/* && \
 	rm -rf /var/cache/apk/*
 
-RUN 	mkdir /etc/service.d/named && \
-	echo '#!/usr/bin/execlineb -P'  >> /etc/service.d/named/run && \
-	echo 'named -c /etc/bind/named.conf -g -4 -u named'  >> /etc/service.d/named/run
+RUN 	mkdir /etc/services.d/named && \
+	echo '#!/usr/bin/execlineb -P'  >> /etc/services.d/named/run && \
+	echo 'named -c /etc/bind/named.conf -g -4 -u named'  >> /etc/services.d/named/run
 
 EXPOSE 53 953
 
