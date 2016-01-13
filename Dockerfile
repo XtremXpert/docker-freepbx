@@ -15,8 +15,7 @@ RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
 	apk update && \
 	apk upgrade && \
 	apk add \
-		bind \
-		bind-tools \
+		asterisk \
 		ca-certificates \
 		mc \
 		nano \
@@ -29,10 +28,10 @@ RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 	rm -fr /var/lib/apk/* && \
 	rm -rf /var/cache/apk/* && \
- 	mkdir /etc/services.d/named && \
-	echo '#!/usr/bin/execlineb -P'  >> /etc/services.d/named/run && \
-	echo 'named -c /etc/bind/named.conf -g -4 -u named'  >> /etc/services.d/named/run
+ 	mkdir /etc/services.d/asterisk && \
+	echo '#!/usr/bin/execlineb -P'  >> /etc/services.d/asterisk/run && \
+	echo 'asterisk'  >> /etc/services.d/asterisk/run
 
-EXPOSE 53 953
+EXPOSE 80 5060
 
 ENTRYPOINT ["/init"]
