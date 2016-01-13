@@ -16,11 +16,39 @@ RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
 	apk upgrade && \
 	apk add \
 		asterisk \
+		asterisk-sample-config \
 		ca-certificates \
+		fcgi \
+		lighttpd \
 		mc \
 		nano \
 		openntpd \
+		patch \
+		perl \
+		php-common \
+		php-cgi \
+		php-curl \
+		php-ctype \
+		php-dom \
+		php-iconv \
+		php-imap \
+		php-gd \
+		php-gettext \
+		php-json \
+		php-ldap \
+		php-mcrypt \
+		mysql \
+		mysql-client \
+		php-pdo \
+		php-pdo_pgsql \
+		php-pear \
+		php-pgsql \
+		php-posix \
+		php-soap \
+		php-xml  \
+		php-xmlrpc \
 		rsync \
+		sed \
 		tar \
 		tzdata \
 		unzip \
