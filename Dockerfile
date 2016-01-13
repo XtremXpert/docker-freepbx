@@ -37,8 +37,8 @@ RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
 		php-json \
 		php-ldap \
 		php-mcrypt \
-		mysql \
-		mysql-client \
+		mariadb \
+		mariadb-client \
 		php-pdo \
 		php-pdo_pgsql \
 		php-pear \
@@ -58,8 +58,14 @@ RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
 	rm -rf /var/cache/apk/* && \
  	mkdir /etc/services.d/asterisk && \
 	echo '#!/usr/bin/execlineb -P'  >> /etc/services.d/asterisk/run && \
-	echo 'asterisk'  >> /etc/services.d/asterisk/run
+	echo 'asterisk'  >> /etc/services.d/asterisk/run && \
+ 	mkdir /etc/services.d/mysql && \
+	echo '#!/usr/bin/execlineb -P'  >> /etc/services.d/mysql/run && \
+	echo 'mysqld --user=mysql'  >> /etc/services.d/mysql/run && \
+ 	mkdir /etc/services.d/lighttpd && \
+	echo '#!/usr/bin/execlineb -P'  >> /etc/services.d/lighttpd/run && \
+	echo 'lighttpd -D -f /etc/lighttpd/lighttpd.conf'  >> /etc/services.d/lighttpd/run
 
-EXPOSE 80 5060
+EXPOSE 80 443 5060
 
 ENTRYPOINT ["/init"]
