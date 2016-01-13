@@ -56,9 +56,9 @@ RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 	rm -fr /var/lib/apk/* && \
 	rm -rf /var/cache/apk/* && \
- 	mkdir /etc/services.d/asterisk && \
-	echo '#!/usr/bin/execlineb -P'  >> /etc/services.d/asterisk/run && \
-	echo 'asterisk'  >> /etc/services.d/asterisk/run && \
+# 	mkdir /etc/services.d/asterisk && \
+#	echo '#!/usr/bin/execlineb -P'  >> /etc/services.d/asterisk/run && \
+#	echo 'asterisk'  >> /etc/services.d/asterisk/run && \
  	mkdir /etc/services.d/mysql && \
 	echo '#!/usr/bin/execlineb -P'  >> /etc/services.d/mysql/run && \
 	echo 'mysqld --user=mysql'  >> /etc/services.d/mysql/run && \
