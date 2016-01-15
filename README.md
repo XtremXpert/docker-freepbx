@@ -2,4 +2,4 @@
 
 #####Command to use with this image :
 
-*docker run -d --name aster -p 5060:5060 resystit/bind9:latest*
+*docker run -d --name aster -p 5060:5060 xtremxpert/docker-freepbx:debian
