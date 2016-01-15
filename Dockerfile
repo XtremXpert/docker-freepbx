@@ -14,8 +14,8 @@ ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-ast
 ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /tmp/
 
 RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / 
-#RUN tar xzf /tmp/certified-asterisk-13.1-current.tar.gz -C /tmp/ 
-#RUN tar xzf /tmp/freepbx-13.0-latest.tgz -C /tmp/
+RUN tar xzf /tmp/certified-asterisk-13.1-current.tar.gz -C /tmp/ 
+RUN tar xzf /tmp/freepbx-13.0-latest.tgz -C /tmp/
 
 RUN apt-get update && \
 	apt-get install --no-install-recommends --no-install-suggests -yqq  \
@@ -33,9 +33,14 @@ RUN apt-get update && \
 		sqlite3 \
 		tzdata \
 		uuid-dev \
-    && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+	&& \
+	echo $TZ > /etc/timezone && \
+	dpkg-reconfigure -f noninteractive tzdata && \
+	echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc  && \
+	echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
+	echo "fr_CA.UTF-8 UTF-8" >> /etc/locale.gen && \
+	locale-gen && \
+	update-locale LANG=fr_CA.UTF-8
 
 #WORKDIR /tmp/certified-asterisk-13.1-cert2
 
