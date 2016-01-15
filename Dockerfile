@@ -42,7 +42,7 @@ RUN echo "fr_CA.UTF-8 UTF-8" >> /etc/locale.gen
 RUN locale-gen fr_CA.UTF-8
 RUN dpkg-reconfigure locales
 
-RUN cd/tmp/certified-asterisk-13.1*
+RUN cd /tmp/certified-asterisk-13.1*
 RUN ./configure;
 RUN make menuselect.makeopts
 RUN sed -i "s/BUILD_NATIVE//" menuselect.makeopts
