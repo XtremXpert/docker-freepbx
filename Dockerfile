@@ -68,12 +68,12 @@ RUN tar xfz /tmp/asterisk-core-sounds-en-wav-current.tar.gz && \
 	tar xfz /tmp/asterisk-core-sounds-en-g722-current.tar.gz && \
 	tar xfz /tmp/asterisk-extra-sounds-en-g722-current.tar.gz 
 
-#RUN mkdir /var/lib/asterisk/sounds/fr
-#WORKDIR /var/lib/asterisk/sounds/fr
-#RUN tar xfz /tmp/asterisk-core-sounds-fr-wav-current.tar.gz && \
-#	tar xfz /tmp/asterisk-extra-sounds-fr-wav-current.tar.gz && \
-#	tar xfz /tmp/asterisk-core-sounds-fr-g722-current.tar.gz && \
-#	tar xfz /tmp/asterisk-extra-sounds-fr-g722-current.tar.gz 
+RUN mkdir /var/lib/asterisk/sounds/fr
+WORKDIR /var/lib/asterisk/sounds/fr
+RUN tar xfz /tmp/asterisk-core-sounds-fr-wav-current.tar.gz && \
+	tar xfz /tmp/asterisk-extra-sounds-fr-wav-current.tar.gz && \
+	tar xfz /tmp/asterisk-core-sounds-fr-g722-current.tar.gz && \
+	tar xfz /tmp/asterisk-extra-sounds-fr-g722-current.tar.gz 
 
 EXPOSE 80 5060
 
