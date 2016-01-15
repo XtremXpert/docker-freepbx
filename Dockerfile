@@ -42,11 +42,11 @@ RUN locale-gen
 RUN update-locale LANG=fr_CA.UTF-8
 
 #WORKDIR /tmp/certified-asterisk-13.1-cert2
-
-#RUN ./configure;
-#RUN make menuselect.makeopts
-#RUN sed -i "s/BUILD_NATIVE//" menuselect.makeopts
-#RUN make; make install; make samples; make config
+RUN cd/tmp/certified-asterisk-13.1*
+RUN ./configure;
+RUN make menuselect.makeopts
+RUN sed -i "s/BUILD_NATIVE//" menuselect.makeopts
+RUN make; make install; make samples; make config
 
 EXPOSE 80 5060
 
