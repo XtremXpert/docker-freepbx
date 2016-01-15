@@ -33,13 +33,13 @@ RUN apt-get update && \
 		sqlite3 \
 		tzdata \
 		uuid-dev
-RUN echo $TZ > /etc/timezone && \
-	dpkg-reconfigure -f noninteractive tzdata && \
-	echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc  && \
-	echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
-	echo "fr_CA.UTF-8 UTF-8" >> /etc/locale.gen && \
-	locale-gen && \
-	update-locale LANG=fr_CA.UTF-8
+RUN echo $TZ > /etc/timezone 
+RUN dpkg-reconfigure -f noninteractive tzdata 
+RUN echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc  
+RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen 
+RUN echo "fr_CA.UTF-8 UTF-8" >> /etc/locale.gen 
+RUN locale-gen 
+RUN update-locale LANG=fr_CA.UTF-8
 
 #WORKDIR /tmp/certified-asterisk-13.1-cert2
 
