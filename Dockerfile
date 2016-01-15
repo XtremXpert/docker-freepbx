@@ -32,9 +32,8 @@ RUN apt-get update && \
 		pkg-config \
 		sqlite3 \
 		tzdata \
-		uuid-dev \
-	&& \
-	echo $TZ > /etc/timezone && \
+		uuid-dev
+RUN echo $TZ > /etc/timezone && \
 	dpkg-reconfigure -f noninteractive tzdata && \
 	echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc  && \
 	echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
