@@ -26,6 +26,7 @@ RUN apt-get update && \
 		libncurses5-dev \
 		libsqlite3-dev \ 
 		libxml2-dev \
+		locales \
 		openssl \
 		mc \
 		nano \
@@ -34,14 +35,13 @@ RUN apt-get update && \
 		tzdata \
 		uuid-dev
 RUN echo $TZ > /etc/timezone 
-RUN dpkg-reconfigure -f noninteractive tzdata 
+RUN dpkg-reconfigure tzdata 
 RUN echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc  
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen 
 RUN echo "fr_CA.UTF-8 UTF-8" >> /etc/locale.gen 
-RUN locale-gen 
-RUN update-locale LANG=fr_CA.UTF-8
+RUN locale-gen fr_CA.UTF-8
+RUN dpkg-reconfigure locales
 
-#WORKDIR /tmp/certified-asterisk-13.1-cert2
 RUN cd/tmp/certified-asterisk-13.1*
 RUN ./configure;
 RUN make menuselect.makeopts
