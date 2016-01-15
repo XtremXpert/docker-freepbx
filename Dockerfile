@@ -43,9 +43,9 @@ RUN locale-gen fr_CA.UTF-8
 RUN dpkg-reconfigure locales
 
 RUN cd /tmp/certified-asterisk-13.1*
-RUN ./configure; make menuselect.makeopts
-RUN sed -i "s/BUILD_NATIVE//" menuselect.makeopts
-RUN make; make install; make samples; make config
+#RUN ./configure; make menuselect.makeopts
+#RUN sed -i "s/BUILD_NATIVE//" menuselect.makeopts
+#RUN make; make install; make samples; make config
 
 EXPOSE 80 5060
 
