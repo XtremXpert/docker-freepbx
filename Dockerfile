@@ -11,10 +11,11 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6-overlay-amd64.tar.gz /tmp/
 ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-13.1-current.tar.gz /tmp/
+ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /tmp/
 
 RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / 
-
-RUN tar xzf /tmp/scertified-asterisk/certified-asterisk-13.1-current.tar.gz -C /tmp/ 
+RUN tar xzf /tmp/certified-asterisk-13.1-current.tar.gz -C /tmp/ 
+RUN tar xzf /tmp/freepbx-13.0-latest.tgz -C /tmp/
 
 RUN apt-get update && \
 	apt-get install --no-install-recommends --no-install-suggests -yqq  \
