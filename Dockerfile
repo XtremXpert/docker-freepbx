@@ -52,6 +52,7 @@ RUN locale-gen fr_CA.UTF-8
 RUN dpkg-reconfigure locales
 
 RUN cd /tmp/certified-asterisk-13.1*
+RUN pwd
 RUN ./configure
 RUN make menuselect.makeopts
 RUN sed -i "s/BUILD_NATIVE//" menuselect.makeopts
@@ -63,15 +64,15 @@ RUN ldconfig
 RUN cd /var/lib/asterisk/sounds
 RUN mkdir en fr
 RUN cd /var/lib/asterisk/sounds/en
-RUN tar xfz /tmp/asterisk-core-sounds-en-wav-current.tar.gz /tmp/
-RUN tar xfz /tmp/asterisk-extra-sounds-en-wav-current.tar.gz /tmp/
-RUN tar xfz /tmp/asterisk-core-sounds-en-g722-current.tar.gz /tmp/
-RUN tar xfz /tmp/asterisk-extra-sounds-en-g722-current.tar.gz /tmp/
+RUN tar xfz /tmp/asterisk-core-sounds-en-wav-current.tar.gz 
+RUN tar xfz /tmp/asterisk-extra-sounds-en-wav-current.tar.gz
+RUN tar xfz /tmp/asterisk-core-sounds-en-g722-current.tar.gz
+RUN tar xfz /tmp/asterisk-extra-sounds-en-g722-current.tar.gz 
 RUN cd /var/lib/asterisk/sounds/fr
-RUN tar xfz /tmp/asterisk-core-sounds-fr-wav-current.tar.gz /tmp/
-RUN tar xfz /tmp/asterisk-extra-sounds-fr-wav-current.tar.gz /tmp/
-RUN tar xfz /tmp/asterisk-core-sounds-fr-g722-current.tar.gz /tmp/
-RUN tar xfz /tmp/asterisk-extra-sounds-fr-g722-current.tar.gz /tmp/
+RUN tar xfz /tmp/asterisk-core-sounds-fr-wav-current.tar.gz 
+RUN tar xfz /tmp/asterisk-extra-sounds-fr-wav-current.tar.gz
+RUN tar xfz /tmp/asterisk-core-sounds-fr-g722-current.tar.gz
+RUN tar xfz /tmp/asterisk-extra-sounds-fr-g722-current.tar.gz 
 
 EXPOSE 80 5060
 
