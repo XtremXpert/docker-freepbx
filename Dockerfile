@@ -22,9 +22,9 @@ ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-extra-sounds-fr-
 ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-core-sounds-fr-g722-current.tar.gz /tmp/
 ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-extra-sounds-fr-g722-current.tar.gz /tmp/
 
-RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / 
-RUN tar xzf /tmp/certified-asterisk-13.1-current.tar.gz -C /tmp/ 
-RUN tar xzf /tmp/freepbx-13.0-latest.tgz -C /tmp/
+RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
+	tar xzf /tmp/certified-asterisk-13.1-current.tar.gz -C /tmp/ && \
+	tar xzf /tmp/freepbx-13.0-latest.tgz -C /tmp/
 
 RUN apt-get update && \
 	apt-get install --no-install-recommends --no-install-suggests -yqq  \
@@ -43,36 +43,37 @@ RUN apt-get update && \
 		sqlite3 \
 		tzdata \
 		uuid-dev
-RUN echo $TZ > /etc/timezone 
-RUN dpkg-reconfigure tzdata 
-RUN echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc  
-RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen 
-RUN echo "fr_CA.UTF-8 UTF-8" >> /etc/locale.gen 
-RUN locale-gen fr_CA.UTF-8
-RUN dpkg-reconfigure locales
+		
+RUN echo $TZ > /etc/timezone && \ 
+	dpkg-reconfigure tzdata && \
+	echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc && \
+	echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
+	echo "fr_CA.UTF-8 UTF-8" >> /etc/locale.gen && \
+	locale-gen fr_CA.UTF-8  && \
+	dpkg-reconfigure locales
 
-WORKDIR /tmp/certified-asterisk-13.1*
-RUN pwd
-RUN ./configure
-RUN make menuselect.makeopts
-RUN sed -i "s/BUILD_NATIVE//" menuselect.makeopts
-RUN make
-RUN make install
-RUN make samples
-RUN make config
-RUN ldconfig
+WORKDIR /tmp/certified-asterisk-13.1-cert2
+RUN ./configure  && \
+	make menuselect.makeopts && \
+	sed -i "s/BUILD_NATIVE//" menuselect.makeopts && \
+	make && \
+	make install && \
+	make config && \
+	ldconfig
+
 RUN mkdir /var/lib/asterisk/sounds/en
 WORKDIR /var/lib/asterisk/sounds/en
-RUN tar xfz /tmp/asterisk-core-sounds-en-wav-current.tar.gz 
-RUN tar xfz /tmp/asterisk-extra-sounds-en-wav-current.tar.gz
-RUN tar xfz /tmp/asterisk-core-sounds-en-g722-current.tar.gz
-RUN tar xfz /tmp/asterisk-extra-sounds-en-g722-current.tar.gz 
+RUN tar xfz /tmp/asterisk-core-sounds-en-wav-current.tar.gz && \
+	tar xfz /tmp/asterisk-extra-sounds-en-wav-current.tar.gz && \
+	tar xfz /tmp/asterisk-core-sounds-en-g722-current.tar.gz && \
+	tar xfz /tmp/asterisk-extra-sounds-en-g722-current.tar.gz 
+
 RUN mkdir /var/lib/asterisk/sounds/fr
 WORKDIR /var/lib/asterisk/sounds/fr
-RUN tar xfz /tmp/asterisk-core-sounds-fr-wav-current.tar.gz 
-RUN tar xfz /tmp/asterisk-extra-sounds-fr-wav-current.tar.gz
-RUN tar xfz /tmp/asterisk-core-sounds-fr-g722-current.tar.gz
-RUN tar xfz /tmp/asterisk-extra-sounds-fr-g722-current.tar.gz 
+RUN tar xfz /tmp/asterisk-core-sounds-fr-wav-current.tar.gz && \
+	tar xfz /tmp/asterisk-extra-sounds-fr-wav-current.tar.gz && \
+	tar xfz /tmp/asterisk-core-sounds-fr-g722-current.tar.gz && \
+	tar xfz /tmp/asterisk-extra-sounds-fr-g722-current.tar.gz 
 
 EXPOSE 80 5060
 
