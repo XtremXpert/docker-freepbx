@@ -15,7 +15,7 @@ ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-ast
 RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
     apt-get update && \
     apt-get install --no-install-recommends --no-install-suggests -yqq  \
-		build-essential 
+		build-essential \
 		curl \
 		libgtk2.0-dev \
 		libjansson-dev \ 
@@ -27,7 +27,7 @@ RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
 		nano \
 		pkg-config \
 		sqlite3 \
-    	tzdata \
+		tzdata \
 		uuid-dev \
     && \
     apt-get clean && \
