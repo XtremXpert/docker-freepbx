@@ -43,8 +43,7 @@ RUN locale-gen fr_CA.UTF-8
 RUN dpkg-reconfigure locales
 
 RUN cd /tmp/certified-asterisk-13.1*
-RUN ./configure;
-RUN make menuselect.makeopts
+RUN ./configure; make menuselect.makeopts
 RUN sed -i "s/BUILD_NATIVE//" menuselect.makeopts
 RUN make; make install; make samples; make config
 
