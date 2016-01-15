@@ -13,8 +13,9 @@ ADD https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6
 ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-13.1-current.tar.gz /tmp/
 
 RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
-    apt-get update && \
-    apt-get install --no-install-recommends --no-install-suggests -yqq  \
+	tar xzf /tmp/scertified-asterisk/certified-asterisk-13.1-current.tar.gz -C /tmp/ && \
+	apt-get update && \
+	apt-get install --no-install-recommends --no-install-suggests -yqq  \
 		build-essential \
 		curl \
 		libgtk2.0-dev \
