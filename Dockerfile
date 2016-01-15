@@ -13,6 +13,15 @@ ADD https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6
 ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-13.1-current.tar.gz /tmp/
 ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /tmp/
 
+ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-core-sounds-en-wav-current.tar.gz /tmp/
+ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-extra-sounds-en-wav-current.tar.gz /tmp/
+ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-core-sounds-en-g722-current.tar.gz /tmp/
+ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-extra-sounds-en-g722-current.tar.gz /tmp/
+ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-core-sounds-fr-wav-current.tar.gz /tmp/
+ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-extra-sounds-fr-wav-current.tar.gz /tmp/
+ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-core-sounds-fr-g722-current.tar.gz /tmp/
+ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-extra-sounds-fr-g722-current.tar.gz /tmp/
+
 RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / 
 RUN tar xzf /tmp/certified-asterisk-13.1-current.tar.gz -C /tmp/ 
 RUN tar xzf /tmp/freepbx-13.0-latest.tgz -C /tmp/
@@ -50,6 +59,19 @@ RUN make
 RUN make install
 RUN make samples
 RUN make config
+RUN ldconfig
+RUN cd /var/lib/asterisk/sounds
+RUN mkdir en fr
+RUN cd /var/lib/asterisk/sounds/en
+RUN tar xfz /tmp/asterisk-core-sounds-en-wav-current.tar.gz /tmp/
+RUN tar xfz /tmp/asterisk-extra-sounds-en-wav-current.tar.gz /tmp/
+RUN tar xfz /tmp/asterisk-core-sounds-en-g722-current.tar.gz /tmp/
+RUN tar xfz /tmp/asterisk-extra-sounds-en-g722-current.tar.gz /tmp/
+RUN cd /var/lib/asterisk/sounds/fr
+RUN tar xfz /tmp/asterisk-core-sounds-fr-wav-current.tar.gz /tmp/
+RUN tar xfz /tmp/asterisk-extra-sounds-fr-wav-current.tar.gz /tmp/
+RUN tar xfz /tmp/asterisk-core-sounds-fr-g722-current.tar.gz /tmp/
+RUN tar xfz /tmp/asterisk-extra-sounds-fr-g722-current.tar.gz /tmp/
 
 EXPOSE 80 5060
 
