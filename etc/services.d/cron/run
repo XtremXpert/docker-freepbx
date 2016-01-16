@@ -1,0 +1,2 @@
+#!/usr/bin/execlineb -S0
+cron -f -L 15

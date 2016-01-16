@@ -15,8 +15,8 @@ ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /
 ADD http://www.pjsip.org/release/2.4.5/pjproject-2.4.5.tar.bz2 /tmp/
 
 RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C /
-RUN tar xzf /tmp/certified-asterisk-13.1-current.tar.gz -C /usr/src/ 
-#RUN tar xvjf /tmp/pjproject-2.4.5.tar.bz2 -C /usr/src/ 
+RUN tar xzf /tmp/certified-asterisk-13.1-current.tar.gz -C /usr/src/
+#RUN tar xvjf /tmp/pjproject-2.4.5.tar.bz2 -C /usr/src/
 RUN tar xzf /tmp/freepbx-13.0-latest.tgz -C /usr/src/
 
 RUN apt-get update && \
@@ -93,8 +93,10 @@ RUN apt-get update && \
 		unixodbc-dev \
 		uuid \
 		uuid-dev
-		
-RUN echo $TZ > /etc/timezone && \ 
+
+COPY etc/ /etc/
+
+RUN echo $TZ > /etc/timezone && \
 	dpkg-reconfigure tzdata && \
 	echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc && \
 	echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
