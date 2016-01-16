@@ -16,7 +16,7 @@ ADD http://www.pjsip.org/release/2.4.5/pjproject-2.4.5.tar.bz2 /tmp/
 
 RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C /
 RUN tar xzf /tmp/certified-asterisk-13.1-current.tar.gz -C /usr/src/ 
-RUN tar xjf /tmp/pjproject-2.4.5.tar.bz2 -C /usr/src/ 
+RUN tar xvjf /tmp/pjproject-2.4.5.tar.bz2 -C /usr/src/ 
 RUN tar xzf /tmp/freepbx-13.0-latest.tgz -C /usr/src/
 
 RUN apt-get update && \
