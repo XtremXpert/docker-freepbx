@@ -10,17 +10,9 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 	TERM="xterm"
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6-overlay-amd64.tar.gz /tmp/
-ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-13.1-current.tar.gz /tmp/
-ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /tmp/
-
-ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-core-sounds-en-wav-current.tar.gz /tmp/
-ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-extra-sounds-en-wav-current.tar.gz /tmp/
-ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-core-sounds-en-g722-current.tar.gz /tmp/
-ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-extra-sounds-en-g722-current.tar.gz /tmp/
-ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-core-sounds-fr-wav-current.tar.gz /tmp/
-ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-extra-sounds-fr-wav-current.tar.gz /tmp/
-ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-core-sounds-fr-g722-current.tar.gz /tmp/
-ADD http://downloads.asterisk.org/pub/telephony/sounds/asterisk-extra-sounds-fr-g722-current.tar.gz /tmp/
+ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-13.1-current.tar.gz /src/
+ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /src/
+ADD http://www.pjsip.org/release/2.4.5/pjproject-2.4.5.tar.bz2 /src/
 
 RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
 	tar xzf /tmp/certified-asterisk-13.1-current.tar.gz -C /tmp/ && \
