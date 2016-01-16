@@ -29,21 +29,63 @@ RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
 RUN apt-get update && \
 	apt-get install --no-install-recommends --no-install-suggests -yqq  \
 		apache2 \
+		binutils-dev \
 		build-essential \
 		curl \
+		doxygen \
+		freetds-dev \
+		git \
+		libasound2-dev \
+		libc-client-dev \
+		libcorosync-dev \
+		libcurl4-openssl-dev \
+		libcurl-dev \
+		libedit-dev \
 		libgtk2.0-dev \
+		libgmime-dev \
+		libgsm1-dev \
+		libical-dev \
+		libiksemel-dev \
+		libjack-dev \
 		libjansson-dev \
+		libldap-dev \
+		liblua5.1-0-dev \
 		libmyodbc \
+		libmysqlclient15-dev \
+		libmysqlclient-dev \
+		libncurses-dev \
 		libncurses5-dev \
+		libneon27-dev \
+		libnewt-dev \
+		libogg-dev \
+		libopenh323-dev \
+		libpopt-dev \
+		libpq-dev \
+		libradiusclient-ng-dev \
+		libresample-dev \
+		libsnmp-dev \
+		libspandsp-dev \
+		libspeex-dev \
+		libspeexdsp-dev \
+		libsqlite0-dev \
 		libsqlite3-dev \
+		libsrtp-dev \
+		libssl-dev \
+		libusb-dev \
+		libvorbis-dev \
+		libvpb-dev \
 		libxml2-dev \
+		libxslt1-dev \
+		libz-dev \
 		locales \
+		lua5.1 \
 		openssl \
 		mariadb-server \
 		mariadb-client \
 		mc \
 		mpg123 \
 		nano \
+		portaudio19-dev \
 		php5 \
 		php5-cli \
 		php5-curl \
@@ -52,9 +94,12 @@ RUN apt-get update && \
 		php-pear \
 		pkg-config \
 		sox \
+		subversion \
 		sudo \
 		sqlite3 \
 		tzdata \
+		unixodbc-dev \
+		uuid \
 		uuid-dev
 		
 RUN echo $TZ > /etc/timezone && \ 
@@ -93,7 +138,7 @@ RUN useradd -m asterisk && \
 	chown asterisk. /var/run/asterisk && \
 	chown -R asterisk. /etc/asterisk && \
 	chown -R asterisk. /var/{lib,log,spool}/asterisk && \
-	chown -R asterisk. /usr/lib/asterisk &&
+	chown -R asterisk. /usr/lib/asterisk && \
 	rm -rf /var/www/html
 
 RUN pear install Console_Getopt && \
