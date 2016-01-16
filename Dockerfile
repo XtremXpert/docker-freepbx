@@ -39,11 +39,11 @@ RUN apt-get update && \
 		libc-client-dev \
 		libcorosync-dev \
 		libcurl4-openssl-dev \
-		libcurl-dev \
 		libedit-dev \
 		libgtk2.0-dev \
-		libgmime-dev \
+		libgmime-2.6-dev \
 		libgsm1-dev \
+		libh323plus-dev \
 		libical-dev \
 		libiksemel-dev \
 		libjack-dev \
@@ -58,10 +58,9 @@ RUN apt-get update && \
 		libneon27-dev \
 		libnewt-dev \
 		libogg-dev \
-		libopenh323-dev \
 		libpopt-dev \
 		libpq-dev \
-		libradiusclient-ng-dev \
+		libfreeradius-client-dev \
 		libresample-dev \
 		libsnmp-dev \
 		libspandsp-dev \
