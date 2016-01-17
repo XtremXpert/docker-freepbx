@@ -93,8 +93,10 @@ RUN apt-get update && \
 		uuid \
 		uuid-dev
 
+#Copie des fichiers de configuration des services S6 et de l'ODBC
 COPY etc/ /etc/
 
+#Localisation du serveur en fonction des variable d'environnement
 RUN echo $TZ > /etc/timezone && \
 	dpkg-reconfigure tzdata && \
 	echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc && \
@@ -109,6 +111,7 @@ RUN pear install Console_Getopt && \
 	sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf && \
 	sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
+#Compillation et installation de PJSIP
 RUN cd /usr/src && \
 	svn co --non-interactive --trust-server-cert http://svn.pjsip.org/repos/pjproject/trunk/ pjproject-trunk && \
 	cd pjproject-trunk && \
@@ -129,7 +132,7 @@ RUN cd /usr/src && \
 	ldconfig
 
 COPY menuselect.makeopts /usr/src/certified-asterisk-13.1-cert2/menuselect.makeopts
-
+# Compillation et installation d'Asterisk
 RUN cd /usr/src/certified-asterisk-13.1-cert2 && \
 	menuselect.makeopts /usr/src/certified-asterisk-13.1-cert2/menuselect.makeopts && \
 	./configure && \
