@@ -138,17 +138,21 @@ RUN cd /usr/src && \
 # Compillation et installation d'Asterisk
 ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-13.1-current.tar.gz /usr/src/
 RUN cd /usr/src/ && \
-	tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz && \
-	cd /usr/src/certified-asterisk-13.1-cert2 && \
+	tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz 
+
+RUN cd /usr/src/certified-asterisk-13.1-cert2 && \
 	menuselect.makeopts  && \
 	sed -i "s/BUILD_NATIVE//" menuselect.makeopts && \
 	sed -i "s/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM CORE-SOUNDS-FR-GSM/" menuselect.makeopts && \
 	sed -i "s/MENUSELECT_EXTRA_SOUNDS=/MENUSELECT_EXTRA_SOUNDS=EXTRA-SOUNDS-EN-GSM EXTRA-SOUNDS-FR-GSM/" menuselect.makeopts && \
+
+RUN cd /usr/src/certified-asterisk-13.1-cert2 && \
 	./configure && \
 	make && \
 	make install && \ 
-	make config && \
-	mkdir -p /etc/asterisk && \
+	make config 
+
+RUN mkdir -p /etc/asterisk && \
 	useradd -m asterisk && \
 	chown asterisk. /var/run/asterisk && \
 	chown -R asterisk. /etc/asterisk && \
