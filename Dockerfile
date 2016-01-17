@@ -24,6 +24,7 @@ RUN apt-get update && \
 		binutils-dev \
 		build-essential \
 		curl \
+		cron \
 		doxygen \
 		freetds-dev \
 		git \
