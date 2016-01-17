@@ -141,7 +141,7 @@ RUN cd /usr/src/ && \
 	tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz 
 
 RUN cd /usr/src/certified-asterisk-13.1-cert2 && \
-	menuselect.makeopts  && \
+	make menuselect.makeopts  && \
 	sed -i "s/BUILD_NATIVE//" menuselect.makeopts && \
 	sed -i "s/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM CORE-SOUNDS-FR-GSM/" menuselect.makeopts && \
 	sed -i "s/MENUSELECT_EXTRA_SOUNDS=/MENUSELECT_EXTRA_SOUNDS=EXTRA-SOUNDS-EN-GSM EXTRA-SOUNDS-FR-GSM/" menuselect.makeopts && \
