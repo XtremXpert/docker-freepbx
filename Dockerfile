@@ -10,7 +10,6 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 	TERM="xterm"
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6-overlay-amd64.tar.gz /tmp/
-ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-13.1-current.tar.gz /usr/src/
 ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /usr/src/
 
 RUN tar xvzf /tmp/s6-overlay-amd64.tar.gz -C /
@@ -131,10 +130,15 @@ RUN cd /usr/src && \
 	make install && \
 	ldconfig
 
-COPY menuselect.makeopts /usr/src/certified-asterisk-13.1-cert2/menuselect.makeopts
 # Compillation et installation d'Asterisk
-RUN cd /usr/src/certified-asterisk-13.1-cert2 && \
-	menuselect.makeopts /usr/src/certified-asterisk-13.1-cert2/menuselect.makeopts && \
+ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-13.1-current.tar.gz /usr/src/
+RUN cd /usr/src/ &&
+	tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz && \
+	cd certified-asterisk-13.1-cert2 && \
+	menuselect.makeopts  && \
+	sed -i "s/BUILD_NATIVE//" menuselect.makeopts && \
+	sed -i "s/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM CORE-SOUNDS-FR-GSM/" menuselect.makeopts && \
+	sed -i "s/MENUSELECT_EXTRA_SOUNDS=/MENUSELECT_EXTRA_SOUNDS=EXTRA-SOUNDS-EN-GSM EXTRA-SOUNDS-FR-GSM/" menuselect.makeopts && \
 	./configure && \
 	make && \
 	make install && \ 
