@@ -1,2 +1,2 @@
-#!/usr/bin/execlineb -S0
+#!/usr/bin/execlineb -P
 cron -f -L 15
