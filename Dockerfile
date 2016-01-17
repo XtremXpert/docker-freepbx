@@ -15,9 +15,10 @@ ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /
 ADD http://www.pjsip.org/release/2.4.5/pjproject-2.4.5.tar.bz2 /usr/src/
 
 RUN tar xvzf /tmp/s6-overlay-amd64.tar.gz -C /
-RUN tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz
-#RUN tar -xvjf /usr/pjproject-2.4.5.tar.bz2
-RUN tar xvzf /usr/src/freepbx-13.0-latest.tgz
+RUN tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz -C /usr/src/
+RUN tar -xvjf /usr/src/pjproject-2.4.5.tar.bz2 -C /usr/src/
+RUN tar xvzf /usr/src/freepbx-13.0-latest.tgz -C /usr/src/
+
 RUN apt-get update && \
 	apt-get install --no-install-recommends --no-install-suggests -yqq  \
 		apache2 \
@@ -109,6 +110,8 @@ RUN pear install Console_Getopt && \
 	cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf_orig && \
 	sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf && \
 	sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+	
+RUN cd /usr/src/	
 
 RUN useradd -m asterisk
 
