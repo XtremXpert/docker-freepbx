@@ -137,7 +137,7 @@ RUN cd /usr/src/certified-asterisk-13.1-cert2 && \
 	menuselect.makeopts /usr/src/certified-asterisk-13.1-cert2/menuselect.makeopts && \
 	./configure && \
 	make && \
-	make install  && 
+	make install && \ 
 	make config && \
 	mkdir -p /etc/asterisk && \
 	useradd -m asterisk
