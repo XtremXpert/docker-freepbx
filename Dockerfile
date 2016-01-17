@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 
 RUN apt-get update
 
-RUN apt-get install -yqq  \
+RUN apt-get install --no-install-recommends --no-install-suggests -yqq  \
 		apache2 \
 		curl \
 		cron \
@@ -62,7 +62,7 @@ RUN pear install Console_Getopt && \
 	sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
 #Pour la compilation
-RUN apt-get install -yqq  \
+RUN apt-get install --no-install-recommends --no-install-suggests -yqq  \
 		binutils-dev \
 		build-essential \
 		curl \
