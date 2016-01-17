@@ -10,15 +10,14 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 	TERM="xterm"
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6-overlay-amd64.tar.gz /tmp/
-ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-13.1-current.tar.gz /tmp/
-ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /tmp/
-ADD http://www.pjsip.org/release/2.4.5/pjproject-2.4.5.tar.bz2 /tmp/
+ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-13.1-current.tar.gz /usr/src/
+ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /usr/src/
+ADD http://www.pjsip.org/release/2.4.5/pjproject-2.4.5.tar.bz2 /usr/src/
 
-RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C /
-RUN tar xzf /tmp/certified-asterisk-13.1-current.tar.gz -C /usr/src/
-#RUN tar xvjf /tmp/pjproject-2.4.5.tar.bz2 -C /usr/src/
-RUN tar xzf /tmp/freepbx-13.0-latest.tgz -C /usr/src/
-
+RUN tar xvzf /tmp/s6-overlay-amd64.tar.gz -C /
+RUN tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz
+RUN tar -xvjf /usr/pjproject-2.4.5.tar.bz2
+RUN tar xvzf /usr/src/freepbx-13.0-latest.tgz
 RUN apt-get update && \
 	apt-get install --no-install-recommends --no-install-suggests -yqq  \
 		apache2 \
@@ -96,6 +95,12 @@ RUN apt-get update && \
 
 COPY etc/ /etc/
 
+RUN cd /usr/src/pjproject-2.4.5 && \
+	CFLAGS='-DPJ_HAS_IPV6=1' ./configure --enable-shared --disable-sound --disable-resample --disable-video --disable-opencore-amr && \
+	make dep && \
+	make && \
+	make install
+
 RUN echo $TZ > /etc/timezone && \
 	dpkg-reconfigure tzdata && \
 	echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc && \
@@ -109,6 +114,8 @@ RUN pear install Console_Getopt && \
 	cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf_orig && \
 	sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf && \
 	sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+
+RUN useradd -m asterisk
 
 EXPOSE 80 5060
 
