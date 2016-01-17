@@ -83,7 +83,8 @@ RUN apt-get install -yqq  \
 		tzdata \
 		unixodbc-dev \
 		uuid \
-		uuid-dev
+		uuid-dev \
+		wget
 
 #Copie des fichiers de configuration des services S6 et de l'ODBC
 ADD https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6-overlay-amd64.tar.gz /tmp/
@@ -127,7 +128,7 @@ RUN cd /usr/src && \
 
 # Compillation et installation d'Asterisk
 ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-13.1-current.tar.gz /usr/src/
-RUN cd /usr/src/ &&
+RUN cd /usr/src/ && \
 	tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz && \
 	cd /usr/src/certified-asterisk-13.1-cert2 && \
 	menuselect.makeopts  && \
