@@ -140,17 +140,15 @@ ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-ast
 RUN cd /usr/src/ && \
 	tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz 
 
-RUN cd /usr/src/certified-asterisk-13.1-cert2 && \
-	./configure && \
-	make menuselect.makeopts  && \
-	sed -i "s/BUILD_NATIVE//" menuselect.makeopts && \
-	sed -i "s/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM CORE-SOUNDS-FR-GSM/" menuselect.makeopts && \
-	sed -i "s/MENUSELECT_EXTRA_SOUNDS=/MENUSELECT_EXTRA_SOUNDS=EXTRA-SOUNDS-EN-GSM EXTRA-SOUNDS-FR-GSM/" menuselect.makeopts && \
-
-RUN cd /usr/src/certified-asterisk-13.1-cert2 && \
-	make && \
-	make install && \ 
-	make config 
+WORKDIR /usr/src/certified-asterisk-13.1-cert2
+RUN	./configure
+RUN	make menuselect.makeopts
+RUN	sed -i "s/BUILD_NATIVE//" menuselect.makeopts
+RUN	sed -i "s/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM CORE-SOUNDS-FR-GSM/" menuselect.makeopts 
+RUN	sed -i "s/MENUSELECT_EXTRA_SOUNDS=/MENUSELECT_EXTRA_SOUNDS=EXTRA-SOUNDS-EN-GSM EXTRA-SOUNDS-FR-GSM/" menuselect.makeopts
+RUN	make
+RUN	make install 
+RUN	make config 
 
 RUN mkdir -p /etc/asterisk && \
 	useradd -m asterisk && \
@@ -163,10 +161,13 @@ RUN mkdir -p /etc/asterisk && \
 # Compillation et installation d'Asterisk
 ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /usr/src/
 RUN cd /usr/src && \
-	tar xvzf /usr/src/freepbx-13.0-latest.tgz && \
-	cd /usr/src/freepbx && \
-	./start_asterisk start && \
-	./install -n
+	tar xvzf /usr/src/freepbx-13.0-latest.tgz 
+
+WORKDIR /usr/src/freepbx 
+RUN ./start_asterisk start && \
+RUN ./install -n
+
+WORKDIR /
 
 EXPOSE 80 5060
 
