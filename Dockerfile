@@ -16,7 +16,7 @@ ADD http://www.pjsip.org/release/2.4.5/pjproject-2.4.5.tar.bz2 /usr/src/
 
 RUN tar xvzf /tmp/s6-overlay-amd64.tar.gz -C /
 RUN tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz
-RUN tar -xvjf /usr/pjproject-2.4.5.tar.bz2
+#RUN tar -xvjf /usr/pjproject-2.4.5.tar.bz2
 RUN tar xvzf /usr/src/freepbx-13.0-latest.tgz
 RUN apt-get update && \
 	apt-get install --no-install-recommends --no-install-suggests -yqq  \
@@ -94,12 +94,6 @@ RUN apt-get update && \
 		uuid-dev
 
 COPY etc/ /etc/
-
-RUN cd /usr/src/pjproject-2.4.5 && \
-	CFLAGS='-DPJ_HAS_IPV6=1' ./configure --enable-shared --disable-sound --disable-resample --disable-video --disable-opencore-amr && \
-	make dep && \
-	make && \
-	make install
 
 RUN echo $TZ > /etc/timezone && \
 	dpkg-reconfigure tzdata && \
