@@ -112,7 +112,7 @@ RUN pear install Console_Getopt && \
 	sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
 RUN cd /usr/src && \
-	svn co http://svn.pjsip.org/repos/pjproject/trunk/ pjproject-trunk && \
+	svn --trust-server-cert co http://svn.pjsip.org/repos/pjproject/trunk/ pjproject-trunk && \
 	cd pjproject-trunk && \
 	./configure --libdir=/usr/lib64 --prefix=/usr --enable-shared --disable-sound --disable-resample --disable-video --disable-opencore-amr CFLAGS='-O2 -DNDEBUG' && \
 	make dep && \
