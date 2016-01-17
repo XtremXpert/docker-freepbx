@@ -1,2 +1,3 @@
-#!/usr/bin/execlineb -P
+#!/usr/bin/sh
+test -e /var/run/mysqld || install -m 755 -o mysql -g root -d /var/run/mysqld
 mysqld --user=mysql
