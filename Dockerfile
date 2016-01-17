@@ -111,8 +111,12 @@ RUN pear install Console_Getopt && \
 	sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf && \
 	sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 	
-RUN cd /usr/src/	
+RUN cd /usr/src/certified-asterisk-13.1-cert2
 
+COPY menuselect.makeopts /usr/src/certified-asterisk-13.1-cert2/menuselect.makeopts
+RUN ./configure;
+RUN make && make install && make samples
+RUN mkdir -p /etc/asterisk
 RUN useradd -m asterisk
 
 EXPOSE 80 5060
