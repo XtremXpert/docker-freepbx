@@ -148,8 +148,8 @@ RUN cd /usr/src/ &&
 
 # Compillation et installation d'Asterisk
 ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /usr/src/
-RUN cd /usr/src
-	tar xvzf /usr/src/freepbx-13.0-latest.tgz
+RUN cd /usr/src && \
+	tar xvzf /usr/src/freepbx-13.0-latest.tgz && \
 	cd /usr/src/freepbx && \
 	./start_asterisk start && \
 	./install -n
