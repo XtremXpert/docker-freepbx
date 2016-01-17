@@ -10,8 +10,59 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 	TERM="xterm"
 
 RUN apt-get update
+
 RUN apt-get install -yqq  \
 		apache2 \
+		curl \
+		cron \
+		doxygen \
+		git \
+		libmyodbc \
+		locales \
+		lua5.1 \
+		openssl \
+		mariadb-server \
+		mariadb-client \
+		mc \
+		mpg123 \
+		nano \
+		php5 \
+		php5-cli \
+		php5-curl \
+		php5-gd \
+		php5-mysql \
+		php-pear \
+		pkg-config \
+		sox \
+		subversion \
+		sudo \
+		sqlite3 \
+		tzdata \
+		uuid \
+		wget
+
+#Copie des fichiers de configuration des services S6 et de l'ODBC
+ADD https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6-overlay-amd64.tar.gz /tmp/
+RUN tar xvzf /tmp/s6-overlay-amd64.tar.gz -C /
+COPY etc/ /etc/
+
+#Localisation du serveur en fonction des variable d'environnement
+RUN echo $TZ > /etc/timezone && \
+	dpkg-reconfigure tzdata && \
+	echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc && \
+	echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
+	echo "fr_CA.UTF-8 UTF-8" >> /etc/locale.gen && \
+	locale-gen fr_CA.UTF-8  && \
+	dpkg-reconfigure locales
+
+RUN pear install Console_Getopt && \
+	sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php5/apache2/php.ini && \
+	cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf_orig && \
+	sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf && \
+	sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+
+#Pour la compilation
+RUN apt-get install -yqq  \
 		binutils-dev \
 		build-essential \
 		curl \
@@ -60,51 +111,9 @@ RUN apt-get install -yqq  \
 		libxml2-dev \
 		libxslt1-dev \
 		libz-dev \
-		locales \
-		lua5.1 \
-		openssl \
-		mariadb-server \
-		mariadb-client \
-		mc \
-		mpg123 \
-		nano \
 		portaudio19-dev \
-		php5 \
-		php5-cli \
-		php5-curl \
-		php5-gd \
-		php5-mysql \
-		php-pear \
-		pkg-config \
-		sox \
-		subversion \
-		sudo \
-		sqlite3 \
-		tzdata \
 		unixodbc-dev \
-		uuid \
-		uuid-dev \
-		wget
-
-#Copie des fichiers de configuration des services S6 et de l'ODBC
-ADD https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6-overlay-amd64.tar.gz /tmp/
-RUN tar xvzf /tmp/s6-overlay-amd64.tar.gz -C /
-COPY etc/ /etc/
-
-#Localisation du serveur en fonction des variable d'environnement
-RUN echo $TZ > /etc/timezone && \
-	dpkg-reconfigure tzdata && \
-	echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc && \
-	echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
-	echo "fr_CA.UTF-8 UTF-8" >> /etc/locale.gen && \
-	locale-gen fr_CA.UTF-8  && \
-	dpkg-reconfigure locales
-
-RUN pear install Console_Getopt && \
-	sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php5/apache2/php.ini && \
-	cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf_orig && \
-	sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf && \
-	sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+		uuid-dev
 
 #Compillation et installation de PJSIP
 RUN cd /usr/src && \
