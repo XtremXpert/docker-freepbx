@@ -16,7 +16,7 @@ ADD http://www.pjsip.org/release/2.4.5/pjproject-2.4.5.tar.bz2 /usr/src/
 
 RUN tar xvzf /tmp/s6-overlay-amd64.tar.gz -C /
 RUN tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz -C /usr/src/
-RUN tar -xvjf /usr/src/pjproject-2.4.5.tar.bz2 -C /usr/src/
+#RUN tar -xvjf /usr/src/pjproject-2.4.5.tar.bz2 -C /usr/src/
 RUN tar xvzf /usr/src/freepbx-13.0-latest.tgz -C /usr/src/
 
 RUN apt-get update && \
@@ -110,14 +110,25 @@ RUN pear install Console_Getopt && \
 	cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf_orig && \
 	sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf && \
 	sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
-	
-RUN cd /usr/src/certified-asterisk-13.1-cert2
+
+RUN cd /usr/src && \
+	svn co http://svn.pjsip.org/repos/pjproject/trunk/ pjproject-trunk && \
+	cd pjproject-trunk && \
+	./configure --libdir=/usr/lib64 --prefix=/usr --enable-shared --disable-sound --disable-resample --disable-video --disable-opencore-amr CFLAGS='-O2 -DNDEBUG' && \
+	make dep && \
+	make && \
+	make install && \
+	ldconfig && \
 
 COPY menuselect.makeopts /usr/src/certified-asterisk-13.1-cert2/menuselect.makeopts
-RUN ./configure;
-RUN make && make install && make samples
-RUN mkdir -p /etc/asterisk
-RUN useradd -m asterisk
+RUN cd /usr/src/certified-asterisk-13.1-cert2 && \
+	menuselect.makeopts /usr/src/certified-asterisk-13.1-cert2/menuselect.makeopts && \
+	./configure && \
+	make && \
+	make install  && 
+	make config && \
+	mkdir -p /etc/asterisk && \
+	useradd -m asterisk
 
 EXPOSE 80 5060
 
