@@ -140,7 +140,16 @@ RUN cd /usr/src/certified-asterisk-13.1-cert2 && \
 	make install && \ 
 	make config && \
 	mkdir -p /etc/asterisk && \
-	useradd -m asterisk
+	useradd -m asterisk && \
+	chown asterisk. /var/run/asterisk && \
+	chown -R asterisk. /etc/asterisk && \
+	chown -R asterisk. /var/{lib,log,spool}/asterisk && \
+	chown -R asterisk. /usr/lib/asterisk && \
+	rm -rf /var/www/html
+
+RUN cd /usr/src/freepbx &&
+	./start_asterisk start && \
+	./install -n
 
 EXPOSE 80 5060
 
