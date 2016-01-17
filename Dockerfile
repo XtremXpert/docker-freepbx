@@ -141,33 +141,33 @@ RUN cd /usr/src/ && \
 	tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz 
 
 WORKDIR /usr/src/certified-asterisk-13.1-cert2
-RUN	./configure
-RUN	make menuselect.makeopts
-RUN	sed -i "s/BUILD_NATIVE//" menuselect.makeopts
-RUN	sed -i "s/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM CORE-SOUNDS-FR-GSM/" menuselect.makeopts 
-RUN	sed -i "s/MENUSELECT_EXTRA_SOUNDS=/MENUSELECT_EXTRA_SOUNDS=EXTRA-SOUNDS-EN-GSM EXTRA-SOUNDS-FR-GSM/" menuselect.makeopts
-RUN	make
-RUN	make install 
-RUN	make config 
+#RUN	./configure
+#RUN	make menuselect.makeopts
+#RUN	sed -i "s/BUILD_NATIVE//" menuselect.makeopts
+#RUN	sed -i "s/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM CORE-SOUNDS-FR-GSM/" menuselect.makeopts 
+#RUN	sed -i "s/MENUSELECT_EXTRA_SOUNDS=/MENUSELECT_EXTRA_SOUNDS=EXTRA-SOUNDS-EN-GSM EXTRA-SOUNDS-FR-GSM/" menuselect.makeopts
+#RUN	make
+#RUN	make install 
+#RUN	make config 
 
-RUN mkdir -p /etc/asterisk && \
-	useradd -m asterisk && \
-	chown asterisk. /var/run/asterisk && \
-	chown -R asterisk. /etc/asterisk && \
-	chown -R asterisk. /var/{lib,log,spool}/asterisk && \
-	chown -R asterisk. /usr/lib/asterisk && \
-	rm -rf /var/www/html
+#RUN mkdir -p /etc/asterisk && \
+#	useradd -m asterisk && \
+#	chown asterisk. /var/run/asterisk && \
+#	chown -R asterisk. /etc/asterisk && \
+#	chown -R asterisk. /var/{lib,log,spool}/asterisk && \
+#	chown -R asterisk. /usr/lib/asterisk && \
+#	rm -rf /var/www/html
 
 # Compillation et installation d'Asterisk
 ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /usr/src/
 RUN cd /usr/src && \
 	tar xvzf /usr/src/freepbx-13.0-latest.tgz 
 
-WORKDIR /usr/src/freepbx 
-RUN ./start_asterisk start && \
-RUN ./install -n
+#WORKDIR /usr/src/freepbx 
+#RUN ./start_asterisk start && \
+#RUN ./install -n
 
-WORKDIR /
+#WORKDIR /
 
 EXPOSE 80 5060
 
