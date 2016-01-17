@@ -9,12 +9,8 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 	TZ="America/Toronto" \
 	TERM="xterm"
 
-ADD https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6-overlay-amd64.tar.gz /tmp/
-
-RUN tar xvzf /tmp/s6-overlay-amd64.tar.gz -C /
-
-RUN apt-get update && \
-	apt-get install --no-install-recommends --no-install-suggests -yqq  \
+RUN apt-get update
+RUN apt-get install -yqq  \
 		apache2 \
 		binutils-dev \
 		build-essential \
@@ -90,6 +86,8 @@ RUN apt-get update && \
 		uuid-dev
 
 #Copie des fichiers de configuration des services S6 et de l'ODBC
+ADD https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6-overlay-amd64.tar.gz /tmp/
+RUN tar xvzf /tmp/s6-overlay-amd64.tar.gz -C /
 COPY etc/ /etc/
 
 #Localisation du serveur en fonction des variable d'environnement
