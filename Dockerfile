@@ -155,7 +155,9 @@ RUN mkdir -p /etc/asterisk && \
 	useradd -m asterisk && \
 	chown asterisk. /var/run/asterisk && \
 	chown -R asterisk. /etc/asterisk && \
-	mkdir /var/{lib,log,spool}/asterisk && \
+	mkdir /var/lib/asterisk && \
+	mkdir /var/log/asterisk && \
+	mkdir /var/spool/asterisk && \
 	chown -R asterisk. /var/{lib,log,spool}/asterisk && \
 	chown -R asterisk. /usr/lib/asterisk && \
 	install -m 755 -o mysql -g root -d /var/run/mysqld  && \
