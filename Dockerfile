@@ -153,15 +153,15 @@ RUN make && \
 	ldconfig
 
 #Correction des droits
-RUN mkdir -p /etc/asterisk && \
-	useradd -m asterisk && \
-	chown -R asterisk. /etc/asterisk && \
-	chown -R asterisk. /var/run/asterisk && \
-	chown -R asterisk. /var/log/asterisk && \
-	chown -R asterisk. /var/spool/asterisk && \
-	chown -R asterisk. /usr/lib/asterisk && \
-	install -m 755 -o mysql -g root -d /var/run/mysqld  && \
-	rm -rf /var/www/html
+RUN mkdir -p /etc/asterisk
+RUN useradd -m asterisk
+RUN chown -R asterisk. /etc/asterisk
+RUN chown -R asterisk. /var/run/asterisk
+RUN chown -R asterisk. /var/log/asterisk
+RUN chown -R asterisk. /var/spool/asterisk
+RUN chown -R asterisk. /usr/lib/asterisk
+RUN install -m 755 -o mysql -g root -d /var/run/mysqld
+RUN rm -rf /var/www/html
 
 # Compillation et installation d'Asterisk
 ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /usr/src/
