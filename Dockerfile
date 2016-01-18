@@ -15,6 +15,7 @@ RUN apt-get update
 
 RUN apt-get install --no-install-recommends --no-install-suggests -yqq  \
 		apache2 \
+		asterisk \
 		curl \
 		cron \
 		doxygen \
@@ -116,58 +117,6 @@ RUN apt-get install --no-install-recommends --no-install-suggests -yqq  \
 		portaudio19-dev \
 		unixodbc-dev \
 		uuid-dev
-
-#Compillation et installation de PJSIP
-RUN cd /usr/src && \
-	svn co --non-interactive --trust-server-cert http://svn.pjsip.org/repos/pjproject/trunk/ pjproject-trunk && \
-	cd pjproject-trunk && \
-	./configure \
-		--libdir=/usr/lib64 \
-		--prefix=/usr \
-		--enable-shared \
-		--disable-sound \
-		--disable-resample \
-		--disable-video \
-		--disable-opencore-amr \
-		CFLAGS='-O2 \
-		-DNDEBUG' \
-	&& \
-	make dep && \
-	make && \
-	make install && \
-	ldconfig
-
-# Compillation et installation d'Asterisk
-ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-13.1-current.tar.gz /usr/src/
-RUN cd /usr/src/ && \
-	tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz 
-
-WORKDIR /usr/src/certified-asterisk-13.1-cert2
-RUN	./configure
-RUN	make menuselect.makeopts
-RUN	sed -i "s/BUILD_NATIVE//" menuselect.makeopts
-RUN	sed -i "s/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM CORE-SOUNDS-FR-GSM/" menuselect.makeopts 
-RUN	sed -i "s/MENUSELECT_EXTRA_SOUNDS=/MENUSELECT_EXTRA_SOUNDS=EXTRA-SOUNDS-EN-GSM EXTRA-SOUNDS-FR-GSM/" menuselect.makeopts
-
-RUN make && \
-	make install && \ 
-	make config && \
-	ldconfig
-
-#Correction des droits
-RUN mkdir -p /etc/asterisk
-RUN useradd -m $ASTERISKUSER
-RUN chown -R $ASTERISKUSER. /etc/asterisk
-RUN chown -R $ASTERISKUSER. /var/lib/asterisk
-RUN chown -R $ASTERISKUSER. /var/run/asterisk
-RUN chown -R $ASTERISKUSER. /var/log/asterisk
-RUN chown -R $ASTERISKUSER. /var/spool/asterisk
-RUN chown -R $ASTERISKUSER. /usr/lib/asterisk
-RUN chown -R $ASTERISKUSER. /var/www
-
-RUN install -m 755 -o mysql -g root -d /var/run/mysqld
-RUN rm -rf /var/www/html
-
 
 RUN /etc/init.d/mysql start && \
 	mysqladmin -u root create asterisk && \
