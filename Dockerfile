@@ -173,6 +173,6 @@ RUN cd /usr/src && \
 
 WORKDIR /
 
-EXPOSE 80 5060
+EXPOSE 80 5060 5061
 
 ENTRYPOINT ["/init"]
