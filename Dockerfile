@@ -146,10 +146,11 @@ RUN	make menuselect.makeopts
 RUN	sed -i "s/BUILD_NATIVE//" menuselect.makeopts
 RUN	sed -i "s/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM/MENUSELECT_CORE_SOUNDS=CORE-SOUNDS-EN-GSM CORE-SOUNDS-FR-GSM/" menuselect.makeopts 
 RUN	sed -i "s/MENUSELECT_EXTRA_SOUNDS=/MENUSELECT_EXTRA_SOUNDS=EXTRA-SOUNDS-EN-GSM EXTRA-SOUNDS-FR-GSM/" menuselect.makeopts
-RUN	make
-RUN	make install 
-RUN	make config 
-RUN	ldconfig
+
+RUN make && \
+	make install && \ 
+	make config && \
+	ldconfig
 
 #Correction des droits
 RUN mkdir -p /etc/asterisk && \
