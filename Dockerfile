@@ -153,7 +153,6 @@ RUN	ldconfig
 
 RUN mkdir -p /etc/asterisk && \
 	useradd -m asterisk && \
-	mkdir /var/spool/asterisk && \
 	chown -R asterisk. /etc/asterisk && \
 	chown -R asterisk. /var/run/asterisk && \
 	chown -R asterisk. /var/log/asterisk && \
