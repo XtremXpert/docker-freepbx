@@ -151,6 +151,7 @@ RUN	make install
 RUN	make config 
 RUN	ldconfig
 
+#Correction des droits
 RUN mkdir -p /etc/asterisk && \
 	useradd -m asterisk && \
 	chown -R asterisk. /etc/asterisk && \
