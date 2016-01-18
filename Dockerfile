@@ -182,20 +182,20 @@ ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /
 RUN cd /usr/src && \
 	tar xvzf /usr/src/freepbx-13.0-latest.tgz 
 
-WORKDIR /usr/src/freepbx 
+#WORKDIR /usr/src/freepbx 
 
-run /etc/init.d/mysql start && \
-	/etc/init.d/apache2 start && \
-	/usr/sbin/asterisk && \
-	./install_amp --installdb --username=$ASTERISKUSER --password=$ASTERISK_DB_PW && \
-	amportal chown && \
+#run /etc/init.d/mysql start && \
+#	/etc/init.d/apache2 start && \
+#	/usr/sbin/asterisk && \
+#	./install_amp --installdb --username=$ASTERISKUSER --password=$ASTERISK_DB_PW && \
+#	amportal chown && \
 	#amportal a ma installall && \
 	#amportal chown && \
-	amportal a reload && \
-	amportal a ma refreshsignatures && \
-	amportal chown && \
+#	amportal a reload && \
+#	amportal a ma refreshsignatures && \
+#	amportal chown && \
 	# ln -s /var/lib/asterisk/moh /var/lib/asterisk/mohmp3 && \
-	rm -r /usr/src/freepbx
+#	rm -r /usr/src/freepbx
 
 WORKDIR /
 
