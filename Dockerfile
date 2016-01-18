@@ -157,6 +157,7 @@ RUN mkdir -p /etc/asterisk && \
 	chown -R asterisk. /etc/asterisk && \
 	chown -R asterisk. /var/{lib,log,spool}/asterisk && \
 	chown -R asterisk. /usr/lib/asterisk && \
+	install -m 755 -o mysql -g root -d /var/run/mysqld  && \
 	rm -rf /var/www/html
 
 # Compillation et installation d'Asterisk
