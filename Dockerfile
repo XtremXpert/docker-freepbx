@@ -172,7 +172,7 @@ RUN cd /usr/src && \
 #RUN ./start_asterisk start && \
 #RUN ./install -n
 
-#WORKDIR /
+WORKDIR /
 
 EXPOSE 80 5060
 
