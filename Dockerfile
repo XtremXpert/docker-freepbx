@@ -7,7 +7,9 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 	LC_ALL="fr_CA.UTF-8" \
 	LANGUAGE="fr_CA.UTF-8" \
 	TZ="America/Toronto" \
-	TERM="xterm"
+	TERM="xterm" \
+	ASTERISKUSER="asterisk" \
+	ASTERISK_DB_PW="aster123"
 
 RUN apt-get update
 
@@ -154,23 +156,46 @@ RUN make && \
 
 #Correction des droits
 RUN mkdir -p /etc/asterisk
-RUN useradd -m asterisk
-RUN chown -R asterisk. /etc/asterisk
-RUN chown -R asterisk. /var/run/asterisk
-RUN chown -R asterisk. /var/log/asterisk
-RUN chown -R asterisk. /var/spool/asterisk
-RUN chown -R asterisk. /usr/lib/asterisk
+RUN useradd -m $ASTERISKUSER
+RUN chown -R $ASTERISKUSER. /etc/asterisk
+RUN chown -R $ASTERISKUSER. /var/lib/asterisk
+RUN chown -R $ASTERISKUSER. /var/run/asterisk
+RUN chown -R $ASTERISKUSER. /var/log/asterisk
+RUN chown -R $ASTERISKUSER. /var/spool/asterisk
+RUN chown -R $ASTERISKUSER. /usr/lib/asterisk
+RUN chown -R $ASTERISKUSER. /var/www
+
 RUN install -m 755 -o mysql -g root -d /var/run/mysqld
 RUN rm -rf /var/www/html
 
-# Compillation et installation d'Asterisk
+
+RUN /etc/init.d/mysql start && \
+	mysqladmin -u root create asterisk && \
+	mysqladmin -u root create asteriskcdrdb && \ 
+	mysql -u root -e "GRANT ALL PRIVILEGES ON asterisk.* TO $ASTERISKUSER@localhost IDENTIFIED BY '$ASTERISK_DB_PW';" && \
+	mysql -u root -e "GRANT ALL PRIVILEGES ON asteriskcdrdb.* TO $ASTERISKUSER@localhost IDENTIFIED BY '$ASTERISK_DB_PW';" && \
+	mysql -u root -e "flush privileges;" && \
+	/etc/init.d/mysql stop
+	
+# Compillation et installation de freepbx
 ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /usr/src/
 RUN cd /usr/src && \
 	tar xvzf /usr/src/freepbx-13.0-latest.tgz 
 
-#WORKDIR /usr/src/freepbx 
-#RUN ./start_asterisk start && \
-#RUN ./install -n
+WORKDIR /usr/src/freepbx 
+
+run /etc/init.d/mysql start && \
+	/etc/init.d/apache2 start && \
+	/usr/sbin/asterisk && \
+	./install_amp --installdb --username=$ASTERISKUSER --password=$ASTERISK_DB_PW && \
+	amportal chown && \
+	#amportal a ma installall && \
+	#amportal chown && \
+	amportal a reload && \
+	amportal a ma refreshsignatures && \
+	amportal chown && \
+	# ln -s /var/lib/asterisk/moh /var/lib/asterisk/mohmp3 && \
+	rm -r /usr/src/freepbx
 
 WORKDIR /
 
