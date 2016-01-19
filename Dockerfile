@@ -122,7 +122,6 @@ RUN cd /usr/src && \
 	svn co --non-interactive --trust-server-cert http://svn.pjsip.org/repos/pjproject/trunk/ pjproject-trunk && \
 	cd pjproject-trunk && \
 	./configure \
-		--libdir=/usr/lib64 \
 		--prefix=/usr \
 		--enable-shared \
 		--disable-sound \
