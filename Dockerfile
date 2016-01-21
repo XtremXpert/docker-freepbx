@@ -22,7 +22,7 @@ RUN apt-get install --no-install-recommends --no-install-suggests -yqq  \
 		libmyodbc \
 		locales \
 		lua5.1 \
-		linux-headers-`uname -r` \
+		linux-headers-amd64 \
 		openssl \
 		mariadb-server \
 		mariadb-client \
