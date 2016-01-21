@@ -11,9 +11,8 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 	ASTERISKUSER="asterisk" \
 	ASTERISK_DB_PW="aster123"
 
-RUN apt-get update
-
-RUN apt-get install --no-install-recommends --no-install-suggests -yqq  \
+RUN apt-get update && \
+	apt-get install --no-install-recommends --no-install-suggests -yqq  \
 		apache2 \
 		curl \
 		cron \
@@ -139,10 +138,10 @@ RUN cd /usr/src && \
 
 ADD http://downloads.asterisk.org/pub/telephony/dahdi-linux/dahdi-linux-current.tar.gz /usr/src/
 RUN cd /usr/src/ && \
-	tar xvzf /usr/src/dahdi-linux-current.tar.gz \
-	cd /usr/src/dahdi-linux-2* \
-	make all \
-	make install \
+	tar xvzf /usr/src/dahdi-linux-current.tar.gz && \
+	cd /usr/src/dahdi-linux-2* && \
+	make all && \
+	make install && \
 	make config
 
 # Compillation et installation d'Asterisk
