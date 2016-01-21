@@ -22,6 +22,7 @@ RUN apt-get install --no-install-recommends --no-install-suggests -yqq  \
 		libmyodbc \
 		locales \
 		lua5.1 \
+		linux-headers-`uname -r` \
 		openssl \
 		mariadb-server \
 		mariadb-client \
@@ -136,6 +137,14 @@ RUN cd /usr/src && \
 	make install && \
 	ldconfig
 
+ADD http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz /usr/src/
+RUN cd /usr/src/ && \
+	tar xvzf /usr/src/dahdi-linux-current.tar.gz \
+	cd /usr/src/dahdi-linux-2* \
+	make all \
+	make install \
+	make config
+
 # Compillation et installation d'Asterisk
 ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-13.1-current.tar.gz /usr/src/
 RUN cd /usr/src/ && \
@@ -167,7 +176,6 @@ RUN chown -R $ASTERISKUSER. /var/www
 RUN install -m 755 -o mysql -g root -d /var/run/mysqld
 RUN rm -rf /var/www/html
 
-
 RUN /etc/init.d/mysql start && \
 	mysqladmin -u root create asterisk && \
 	mysqladmin -u root create asteriskcdrdb && \ 
@@ -181,20 +189,12 @@ ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /
 RUN cd /usr/src && \
 	tar xvzf /usr/src/freepbx-13.0-latest.tgz 
 
-#WORKDIR /usr/src/freepbx 
+WORKDIR /usr/src/freepbx 
 
-#run /etc/init.d/mysql start && \
-#	/etc/init.d/apache2 start && \
-#	/usr/sbin/asterisk && \
-#	./install_amp --installdb --username=$ASTERISKUSER --password=$ASTERISK_DB_PW && \
-#	amportal chown && \
-	#amportal a ma installall && \
-	#amportal chown && \
-#	amportal a reload && \
-#	amportal a ma refreshsignatures && \
-#	amportal chown && \
-	# ln -s /var/lib/asterisk/moh /var/lib/asterisk/mohmp3 && \
-#	rm -r /usr/src/freepbx
+run /etc/init.d/mysql start && \
+	/etc/init.d/apache2 start && \
+	/etc/init.d/asterisk start && \
+	./install -n 
 
 WORKDIR /
 
