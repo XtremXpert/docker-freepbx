@@ -137,7 +137,7 @@ RUN cd /usr/src && \
 	make install && \
 	ldconfig
 
-ADD http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz /usr/src/
+ADD http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-current.tar.gz /usr/src/
 RUN cd /usr/src/ && \
 	tar xvzf /usr/src/dahdi-linux-current.tar.gz \
 	cd /usr/src/dahdi-linux-2* \
