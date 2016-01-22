@@ -17,7 +17,6 @@ ADD http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-ast
 ADD http://mirror.freepbx.org/modules/packages/freepbx/freepbx-13.0-latest.tgz /usr/src/
 
 RUN tar xvzf /tmp/s6-overlay-amd64.tar.gz -C /
-COPY etc/ /etc/
 
 RUN apt-get update && \
 	apt-get install --no-install-recommends --no-install-suggests -yqq  \
@@ -98,6 +97,8 @@ RUN apt-get update && \
 		wget
 
 #Localisation du serveur en fonction des variable d'environnement
+COPY etc/ /etc/
+
 RUN echo $TZ > /etc/timezone && \
 	dpkg-reconfigure tzdata && \
 	echo 'alias ll="ls -lah --color=auto"' >> /etc/bash.bashrc && \
