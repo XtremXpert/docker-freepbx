@@ -138,6 +138,7 @@ RUN cd /usr/src && \
 
 ADD http://downloads.asterisk.org/pub/telephony/dahdi-linux/dahdi-linux-current.tar.gz /usr/src/
 RUN cd /usr/src/ && \
+	ln -s linux-headers-3.16.0-4-amd64 linux-headers-3.13.0-40-generic && \
 	tar xvzf /usr/src/dahdi-linux-current.tar.gz && \
 	cd /usr/src/dahdi-linux-2* && \
 	make all && \
