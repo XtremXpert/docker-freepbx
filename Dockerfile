@@ -106,7 +106,7 @@ RUN echo $TZ > /etc/timezone && \
 	echo "fr_CA.UTF-8 UTF-8" >> /etc/locale.gen && \
 	locale-gen fr_CA.UTF-8  && \
 	dpkg-reconfigure locales && \
-	pear install Console_Getopt && \
+#	pear install Console_Getopt && \
 	sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php5/apache2/php.ini && \
 	cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf_orig && \
 	sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf && \
