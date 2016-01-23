@@ -180,7 +180,7 @@ RUN cd /usr/src && \
 	cd /usr/src/freepbx && \
 	/etc/init.d/mysql start && \
 	/etc/init.d/apache2 start && \
-	/etc/init.d/asterisk start && \
+	./start_asterisk start && \
 	./install -n 
 
 EXPOSE 80 4569 5060 5061
