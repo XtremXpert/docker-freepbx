@@ -156,7 +156,7 @@ RUN cd /usr/src/ && \
 
 RUN mkdir -p /etc/asterisk && \
 	useradd -m $ASTERISKUSER && \
-	RUN chown -R $ASTERISKUSER. /etc/asterisk && \
+	chown -R $ASTERISKUSER. /etc/asterisk && \
 	chown -R $ASTERISKUSER. /var/lib/asterisk && \
 	chown -R $ASTERISKUSER. /var/run/asterisk && \
 	chown -R $ASTERISKUSER. /var/log/asterisk && \
