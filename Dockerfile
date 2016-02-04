@@ -175,13 +175,13 @@ RUN /etc/init.d/mysql start && \
 	/etc/init.d/mysql stop
 	
 # Compillation et installation de freepbx
-RUN cd /usr/src && \
-	tar xvzf /usr/src/freepbx-13.0-latest.tgz && \
-	cd /usr/src/freepbx && \
-	/etc/init.d/mysql start && \
-	/etc/init.d/apache2 start && \
-	./start_asterisk start && \
-	./install -n 
+#RUN cd /usr/src && \
+#	tar xvzf /usr/src/freepbx-13.0-latest.tgz && \
+#	cd /usr/src/freepbx && \
+#	/etc/init.d/mysql start && \
+#	/etc/init.d/apache2 start && \
+#	./start_asterisk start && \
+#	./install -n 
 
 EXPOSE 80 4569 5060 5061
 
