@@ -143,7 +143,7 @@ RUN echo $TZ > /etc/timezone && \
 # Compillation et installation d'Asterisk
 RUN cd /usr/src/ && \
 	tar xvzf /usr/src/certified-asterisk-13.1-current.tar.gz && \ 
-	cd /usr/src/certified-asterisk-13.1-cert2 && \
+	cd /usr/src/certified-asterisk-13.1-cert3 && \
 	./configure && \
 	make menuselect.makeopts && \
 	sed -i "s/BUILD_NATIVE//" menuselect.makeopts && \
